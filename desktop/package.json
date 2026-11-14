@@ -12,8 +12,8 @@
   "scripts": {
     "sync": "node scripts/sync.js",
     "start": "npm run sync && electron .",
-    "dist:linux": "npm run sync && electron-builder --linux deb rpm",
-    "dist:win": "npm run sync && electron-builder --win nsis portable"
+    "dist:linux": "npm run sync && electron-builder --linux deb rpm --publish never",
+    "dist:win": "npm run sync && electron-builder --win nsis portable --publish never"
   },
   "devDependencies": { "electron": "^45.3.2", "electron-builder": "^26.18.0" },
   "build": {
@@ -31,7 +31,7 @@
       "artifactName": "os-lab-simulator-${version}-${arch}.${ext}"
     },
     "deb": { "depends": ["libgtk-3-0", "libnotify4", "libnss3", "libxss1", "libxtst6", "xdg-utils", "libatspi2.0-0", "libuuid1", "libsecret-1-0"] },
-    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }], "artifactName": "OS-Lab-Simulator-${version}-${arch}-${target}.${ext}" },
-    "nsis": { "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "license": "../LICENSE", "shortcutName": "OS Lab Simulator" }
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }],
+    "nsis": { "artifactName": "OS-Lab-Simulator-${version}-${arch}-installer.${ext}" "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "license": "../LICENSE", "shortcutName": "OS Lab Simulator" "portable": { "artifactName": "OS-Lab-Simulator-${version}-${arch}-portable.${ext}" } }
   }
 }
