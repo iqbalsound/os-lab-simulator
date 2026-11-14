@@ -9,4 +9,9 @@ d.getElementById('menu').children[9].click();d.querySelector('#viz button.p').cl
 console.log('sched out:',d.getElementById('o').textContent.slice(-70));
 d.getElementById('menu').children[14].click();d.querySelector('#viz button.p').click();console.log('disk:',d.getElementById('o').textContent.slice(-45));
 w.ins();console.log('inserted code starts:',d.getElementById('code').value.slice(0,30).replace(/\n/g,' '));
-console.log('about version ok:',d.getElementById('about').textContent.includes('1.0.0'),'pdf link:',!!d.querySelector('a[download]'),'failures',bad);
+console.log('about version ok:',d.getElementById('about').textContent.includes('1.1.0'),'pdf link:',!!d.querySelector('a[download]'),'failures',bad);
+// v1.1.0 checks
+w.theme('matrix');console.log('theme attr:',w.document.documentElement.getAttribute('data-theme'));
+d.getElementById('sn').value='Ali';d.getElementById('menu').children[5].click();
+const t=w.pdfHtml('task'),o=w.pdfHtml('obs');d.getElementById('notes').innerHTML='<b>Seen</b>';
+console.log('task pdf ok:',t.includes('Lab 6')&&t.includes('Ali')&&t.includes('pipe')&&t.includes('counter(pages)'),'obs pdf ok:',w.pdfHtml('obs').includes('<b>Seen</b>'));

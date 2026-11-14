@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OS Lab Simulator v1.0.0</title>
+<title>OS Lab Simulator v1.1.0</title>
 <style>
 :root{--bg:#fff;--fg:#1b2430;--pn:#f3f6fb;--ac:#1f5fa8;--bd:#c9d3e0}
 @media(prefers-color-scheme:dark){:root{--bg:#10161f;--fg:#e6edf5;--pn:#18212d;--ac:#6db3ff;--bd:#2b3a4d}}
@@ -29,13 +29,17 @@ pre{background:var(--pn);padding:6px;overflow:auto}
 .pr{color:#6f6}.fr{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 12px;position:relative}.fr:after{content:"\2193";position:absolute;left:50%;bottom:-14px;color:var(--ac)}.fr:last-child:after{content:""}
 .nd{border:2px solid var(--ac);border-radius:8px;padding:4px 6px;font-size:12px;text-align:center;cursor:pointer;background:var(--pn)}.nd.p{background:#1f5fa822}.nd.k{background:#c0501b22;border-color:#c0501b}.nd:hover{background:var(--ac);color:#fff}
 #sol{max-height:340px;overflow:auto;background:#0c0f12;color:#d8e0d0}#sol .hl{background:#b8860b88;display:block}#sol span{display:block;min-height:1.35em}a.btn{color:#fff;border:1px solid #fff8;padding:3px 8px;border-radius:5px;text-decoration:none;font-size:13px}
+[data-theme=light]{--bg:#fff;--fg:#1b2430;--pn:#f3f6fb;--ac:#1f5fa8;--bd:#c9d3e0}[data-theme=dark]{--bg:#10161f;--fg:#e6edf5;--pn:#18212d;--ac:#2f6fb3;--bd:#2b3a4d}
+[data-theme=matrix]{--bg:#050805;--fg:#8dffa0;--pn:#0b140b;--ac:#1c7a35;--bd:#1e3a1e}[data-theme=sepia]{--bg:#f6efe0;--fg:#3b2f1e;--pn:#ece1c8;--ac:#8a5a1c;--bd:#cdb98f}[data-theme=ocean]{--bg:#06202b;--fg:#d9f1f7;--pn:#0b3142;--ac:#0e7f9c;--bd:#1b5568}
+header select{padding:3px}.id input{width:130px}
 </style></head><body>
-<header><h1>OS Lab Simulator <small>v1.0.0</small></h1><a class="btn" href="docs/OS_Lab_Manual_Fall_2026.pdf" download>Lab Manual PDF</a><button onclick="about.style.display='grid'">About</button></header>
+<header><h1>OS Lab Simulator <small>v1.1.0</small></h1><select id="th" onchange="theme(this.value)" title="Theme"><option value="auto">Theme: Auto</option><option value="light">Light</option><option value="dark">Dark</option><option value="matrix">Matrix</option><option value="sepia">Sepia</option><option value="ocean">Ocean</option></select><a class="btn" href="docs/OS_Lab_Manual_Fall_2026.pdf" download>Lab Manual PDF</a><button onclick="about.style.display='grid'">About</button></header>
 <main>
 <nav id="menu"></nav>
 <section id="lab"></section>
 <section>
  <h3>Code editor (type your program here)</h3>
+ <div class="tb id">Name <input id="sn" placeholder="Your name"> Roll No <input id="sr" placeholder="Roll number"> <button onclick="pdf('task')">Task PDF</button><button onclick="pdf('obs')">Observation PDF</button></div>
  <div class="tb"><button class="p" onclick="check()">Check my work</button><button onclick="starter()">Load starter</button><button onclick="save()">Save .c</button></div>
  <div class="tb"><button id="t0" class="p" onclick="tab(0)">Your code</button><button id="t1" onclick="tab(1)">Solution</button><button onclick="cp(0)">Copy</button><button onclick="ins()">Paste solution into editor</button></div>
  <div id="ed"><div id="ln">1</div><textarea id="code" spellcheck="false"></textarea></div>
@@ -53,7 +57,7 @@ pre{background:var(--pn);padding:6px;overflow:auto}
 </section>
 </main>
 <div id="about" onclick="this.style.display='none'"><div>
- <h2>OS Lab Simulator</h2><p><b>Version:</b> 1.0.0<br><b>Author:</b> Iqbal Uddin Khan, Department of Information Technology, FEST, Hamdard University<br><b>Licence:</b> MIT<br><b>Course:</b> Operating Systems (CS-213)</p>
+ <h2>OS Lab Simulator</h2><p><b>Version:</b> 1.1.0<br><b>Author:</b> Iqbal Uddin Khan, Department of Information Technology, FEST, Hamdard University<br><b>Licence:</b> MIT<br><b>Course:</b> Operating Systems (CS-213)</p>
  <p>Educational simulator; it models behaviour for learning and does not run real Linux.</p><button>Close</button></div></div>
 <script>
 const $=id=>document.getElementById(id),f=(c,v)=>document.execCommand(c,false,v);
@@ -93,7 +97,7 @@ else if(t=='disk')v.innerHTML=`<p>Head <input id="h" value="53" size="3"> Reques
 else if(t=='bank')v.innerHTML=`<p>Allocation (rows split by ;) <input id="a" value="0 1 0;2 0 0;3 0 2;2 1 1;0 0 2" size="30"><br>Max <input id="m" value="7 5 3;3 2 2;9 0 2;2 2 2;4 3 3" size="30"><br>Available <input id="c" value="3 3 2" size="6"> <button class="p" onclick="bank()">Check safety</button></p><div id="o"></div>`;
 else if(t=='fit')v.innerHTML=`<p>Blocks <input id="a" value="100 500 200 300 600" size="18"> Processes <input id="m" value="212 417 112 426" size="14"> <select id="b"><option>First-Fit</option><option>Best-Fit</option><option>Worst-Fit</option></select> <button class="p" onclick="fit()">Run</button></p><div id="o"></div>`;
 else if(t=='fork')v.innerHTML=`<p>Number of consecutive fork() calls <input id="c" value="2" size="2"> <button class="p" onclick="fork()">Draw</button></p><div id="o" class="tr"></div>`;
-else v.innerHTML='<p><i>No visualizer for this lab in v1.0.0.</i></p>'}
+else v.innerHTML='<p><i>No visualizer for this lab in v1.1.0.</i></p>'}
 function sched(){const bt=nums($('a').value),al=$('b').value,q=+$('c').value;let ord=bt.map((_,i)=>i),t=0,seg=[],ct=[],rem=[...bt];
 if(al=='SJF')ord.sort((x,y)=>bt[x]-bt[y]||x-y);
 if(al=='RR'){let d=0;while(d<bt.length)for(let i=0;i<bt.length;i++)if(rem[i]){const r=Math.min(q,rem[i]);seg.push([i,r]);t+=r;rem[i]-=r;if(!rem[i]){ct[i]=t;d++}}}
@@ -130,4 +134,12 @@ const _show=show;show=function(i){_show(i);$('sol').innerHTML=SOL[i].split('\n')
 $('flow').innerHTML=FL[i].map(n=>`<div class="fr">${n[2]==2?`<div class="nd k" style="grid-column:1/3" data-r="${hx(n[1])}">${hx(n[0])}</div>`:(n[2]==0?`<div class="nd p" data-r="${hx(n[1])}">${hx(n[0])}</div><div></div>`:`<div></div><div class="nd k" data-r="${hx(n[1])}">${hx(n[0])}</div>`)}</div>`).join('');
 [...document.querySelectorAll('.nd')].forEach(e=>e.onclick=()=>hl(e.dataset.r));tab(0)};
 [...$('menu').children].forEach((b,i)=>b.onclick=()=>show(i));show(0);
+
+function theme(v){v=='auto'?document.documentElement.removeAttribute('data-theme'):document.documentElement.setAttribute('data-theme',v);try{localStorage.setItem('th',v)}catch(e){}}
+try{const t=localStorage.getItem('th');if(t){$('th').value=t;theme(t)}}catch(e){}
+function pdfHtml(k){const l=LABS[cur],n=$('sn').value||'________',r=$('sr').value||'________',d=new Date().toLocaleDateString();
+const hd=`<h1>Lab ${cur+1}: ${hx(l[0])}</h1><p><b>Name:</b> ${hx(n)} &nbsp; <b>Roll No:</b> ${hx(r)} &nbsp; <b>Date:</b> ${d}</p>`;
+const body=k=='task'?`<h2>Objective</h2><p>${hx(l[1])}</p><h2>Steps</h2><ol>${l[2].map(x=>`<li>${hx(x)}</li>`).join('')}</ol><h2>My code</h2><pre>${hx($('code').value)}</pre><h2>Terminal output</h2><pre class="t">${hx($('tm').textContent)}</pre>`:`<h2>Observation</h2><div>${$('notes').innerHTML}</div>`;
+return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lab ${cur+1} ${k=='task'?'Task':'Observation'}</title><style>@page{size:A4;margin:.3in .3in .3in .7in;@top-right{content:"OS Lab Simulator 1.1.0 | Iqbal Uddin Khan | Department of Information Technology, FEST HU";font:9pt Aptos,Arial}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:9pt Aptos,Arial}}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{font:12pt Aptos,Calibri,Arial,sans-serif;text-align:justify}h1{font-size:18pt}h2{font-size:16pt}pre{font:12pt "Aptos Mono",Consolas,monospace;text-align:left;white-space:pre-wrap;background:#f2f4f7;padding:6px}.t{background:#111;color:#ddd}</style></head><body>${hd}${body}</body></html>`}
+function pdf(k){const w=window.open('','_blank');if(!w){alert('Allow pop-ups, then choose "Save as PDF" in the print dialog.');return}w.document.write(pdfHtml(k));w.document.close();setTimeout(()=>{w.focus();w.print()},400)}
 </script></body></html>
