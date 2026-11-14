@@ -3,7 +3,9 @@
 Browser-based companion to the Operating Systems lab manual (CS-213, Revised Edition Fall 2026).
 Author: Iqbal Uddin Khan, Department of Information Technology, FEST, Hamdard University. Licence: MIT.
 
-**Run:** open `index.html` (double-click). No install, works offline.
+**Desktop app (v2.0.0):** DEB, RPM, Windows installer and portable are on the Releases page; see `desktop/README.md`.
+
+**Web (v1.1.0):** open `index.html` (double-click). No install, works offline.
 **GitHub Pages:** Settings > Pages > Branch `main`, folder `/ (root)`.
 
 ## Features

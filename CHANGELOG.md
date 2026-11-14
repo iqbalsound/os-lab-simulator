@@ -1,4 +1,8 @@
 # Changelog
+## 2.0.0 (desktop)
+- Electron desktop app: DEB, RPM, Windows installer and portable built by GitHub Actions (tag `v2.*`)
+- PDFs saved directly with A4 margins, header and footer; publisher and licence metadata
+- The web app at the repository root (GitHub Pages) stays at 1.1.0
 ## 1.1.0
 - Task PDF and Observation PDF export, theme switcher (Auto, Light, Dark, Matrix, Sepia, Ocean)
 - docs/ now holds only the Lab Manual PDF (Word files and cover images removed)

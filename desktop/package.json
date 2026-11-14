@@ -1,0 +1,37 @@
+{
+  "name": "os-lab-simulator",
+  "productName": "OS Lab Simulator",
+  "version": "2.0.0",
+  "description": "Offline simulator for the Operating Systems lab manual (CS-213)",
+  "main": "main.js",
+  "license": "MIT",
+  "homepage": "https://github.com/iqbalsound/os-lab-simulator",
+  "bugs": "https://github.com/iqbalsound/os-lab-simulator/issues",
+  "repository": { "type": "git", "url": "git+https://github.com/iqbalsound/os-lab-simulator.git" },
+  "author": { "name": "Iqbal Uddin Khan", "email": "iqbalsound@users.noreply.github.com", "url": "https://github.com/iqbalsound" },
+  "scripts": {
+    "sync": "node scripts/sync.js",
+    "start": "npm run sync && electron .",
+    "dist:linux": "npm run sync && electron-builder --linux deb rpm",
+    "dist:win": "npm run sync && electron-builder --win nsis portable"
+  },
+  "devDependencies": { "electron": "^45.3.2", "electron-builder": "^26.18.0" },
+  "build": {
+    "appId": "io.github.iqbalsound.oslabsimulator",
+    "productName": "OS Lab Simulator",
+    "copyright": "Copyright (c) 2026 Iqbal Uddin Khan, Department of Information Technology, FEST, Hamdard University. MIT License.",
+    "publish": null,
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "app/**/*", "package.json"],
+    "extraResources": [{ "from": "../LICENSE", "to": "LICENSE" }],
+    "linux": {
+      "target": ["deb", "rpm"], "category": "Education", "maintainer": "Iqbal Uddin Khan <iqbalsound@users.noreply.github.com>",
+      "vendor": "Iqbal Uddin Khan", "synopsis": "Operating Systems lab simulator",
+      "description": "Offline simulator with guided steps, solutions, flow diagrams and a terminal for the 15 Operating Systems labs.",
+      "artifactName": "os-lab-simulator-${version}-${arch}.${ext}"
+    },
+    "deb": { "depends": ["libgtk-3-0", "libnotify4", "libnss3", "libxss1", "libxtst6", "xdg-utils", "libatspi2.0-0", "libuuid1", "libsecret-1-0"] },
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }], "artifactName": "OS-Lab-Simulator-${version}-${arch}-${target}.${ext}" },
+    "nsis": { "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "license": "../LICENSE", "shortcutName": "OS Lab Simulator" }
+  }
+}
